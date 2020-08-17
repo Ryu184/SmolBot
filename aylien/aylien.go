@@ -3,7 +3,6 @@ package aylien
 import (
 	"errors"
 	"fmt"
-	"math/rand"
 	"strings"
 
 	textapi "github.com/AYLIEN/aylien_textapi_go"

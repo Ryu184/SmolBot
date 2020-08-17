@@ -2,6 +2,7 @@ package roll
 
 import (
 	"fmt"
+	"time"
 	"math/rand"
 
 	"github.com/jonas747/dcmd"
