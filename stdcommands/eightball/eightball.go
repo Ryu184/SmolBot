@@ -1,12 +1,10 @@
 package roll
 
 import (
-	"fmt"
 	"time"
 	"math/rand"
 
 	"github.com/jonas747/dcmd"
-	"github.com/jonas747/dice"
 	"github.com/jonas747/yagpdb/commands"
 )
 
