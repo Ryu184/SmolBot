@@ -18,6 +18,7 @@ import (
 	"github.com/jonas747/yagpdb/stdcommands/dcallvoice"
 	"github.com/jonas747/yagpdb/stdcommands/define"
 	"github.com/jonas747/yagpdb/stdcommands/dogfact"
+	"github.com/jonas747/yagpdb/stdcommands/eightball"
 	"github.com/jonas747/yagpdb/stdcommands/findserver"
 	"github.com/jonas747/yagpdb/stdcommands/globalrl"
 	"github.com/jonas747/yagpdb/stdcommands/info"
@@ -77,6 +78,7 @@ func (p *Plugin) AddCommands() {
 		topic.Command,
 		catfact.Command,
 		dogfact.Command,
+		eightball.Command,
 		advice.Command,
 		ping.Command,
 		throw.Command,

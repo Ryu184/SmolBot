@@ -125,51 +125,5 @@ func (p *Plugin) AddCommands() {
 			return out, nil
 		},
 	},
-		// This is a fun little always positive 8ball
-		&commands.YAGCommand{
-			Cooldown:    2,
-			CmdCategory: commands.CategoryFun,
-			Name:        "8Ball",
-			Description: "Wisdom",
-			Arguments: []*dcmd.ArgDef{
-				&dcmd.ArgDef{Name: "What to ask", Type: dcmd.String},
-			},
-			RequiredArgs: 1,
-			RunFunc: func(cmd *dcmd.Data) (interface{}, error) {
-				resp, err := p.aylien.Sentiment(&textapi.SentimentParams{Text: cmd.Args[0].Str()})
-				if err != nil {
-					resp = &textapi.SentimentResponse{
-						Polarity:               "neutral",
-						PolarityConfidence:     1,
-						Subjectivity:           "subjective",
-						SubjectivityConfidence: 1,
-					}
-				}
-
-				switch resp.Polarity {
-				case "neutral":
-					if rand.Intn(2) > 0 {
-						return "Yes", nil
-					} else {
-						return "No", nil
-					}
-				case "positive":
-					switch {
-					case resp.PolarityConfidence >= 0 && resp.PolarityConfidence < 0.5:
-						return "Most likely", nil
-					case resp.PolarityConfidence >= 0.5:
-						return "Without a doubt", nil
-					}
-				case "negative":
-					switch {
-					case resp.PolarityConfidence >= 0 && resp.PolarityConfidence < 0.5:
-						return "Not likely", nil
-					case resp.PolarityConfidence >= 0.5:
-						return "Definitively not", nil
-					}
-				}
-				return "Dunno", nil
-			},
-		},
 	)
 }
