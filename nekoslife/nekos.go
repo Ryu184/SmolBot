@@ -704,7 +704,7 @@ var EroCommand = &commands.YAGCommand{
 var CatCommand = &commands.YAGCommand{
 	Cooldown:    5,
 	CmdCategory: commands.CategoryAnime,
-	Name:        "Neko",
+	Name:        "CatEmoji",
 	Description: "Grabs a random cat text emoji from nekos.life.",
 	RunFunc: func(data *dcmd.Data) (interface{}, error) {
 		result := &CatResult{}
