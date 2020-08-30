@@ -11,13 +11,20 @@ networks:
 
 services:
   app:
-    image: caskd/yagpdb
+    build:
+      # We change context so that we can copy the local repo in during
+      # development
+      context: ../
+      dockerfile: yagpdb_docker/Dockerfile
     restart: unless-stopped
     command:
+      - "/app/yagpdb"
       - "-all"
+      - "-feeds"
+      - "reddit,youtube,twitter"
       - "-pa"
-      - "-exthttps=false"
-      - "-https=true"
+      - "-exthttps=true"
+      - "-https=false"
     depends_on:
       - redis
       - db
@@ -27,8 +34,8 @@ services:
       - cert_cache:/app/cert
       - soundboard:/app/soundboard
     ports:
-      - '80:80'
-      - '443:443'
+            - '2020:80'
+#      - '443:443'
     env_file:
       - app.env
 
@@ -49,4 +56,3 @@ services:
       - default
     env_file:
       - db.env
-
