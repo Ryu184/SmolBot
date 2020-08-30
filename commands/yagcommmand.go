@@ -60,6 +60,18 @@ var (
 		HelpEmoji:   "🎌",
 		EmbedColor:  0x5ae26c,
 	}
+	CategoryAnimeLewd = &dcmd.Category{
+		Name:        "Anime Lewd (1)",
+		Description: "Various commands to fetch NSFW anime images from the nekos.life API",
+		HelpEmoji:   "🎌",
+		EmbedColor:  0x5ae26c,
+	}
+	CategoryAnimeLewd2 = &dcmd.Category{
+		Name:        "Anime Lewd (2)",
+		Description: "Various commands to fetch NSFW anime images from the nekos.life API",
+		HelpEmoji:   "🎌",
+		EmbedColor:  0x5ae26c,
+	}
 	CategoryDebug = &dcmd.Category{
 		Name:        "Debug & Maintenance",
 		Description: "Debug and other commands to inspect the bot",
