@@ -54,6 +54,12 @@ var (
 		HelpEmoji:   "🎉",
 		EmbedColor:  0x5ae26c,
 	}
+	CategoryAnime = &dcmd.Category{
+		Name:        "Anime",
+		Description: "Various commands to fetch anime images from the nekos.life API",
+		HelpEmoji:   "🎌",
+		EmbedColor:  0x5ae26c,
+	}
 	CategoryDebug = &dcmd.Category{
 		Name:        "Debug & Maintenance",
 		Description: "Debug and other commands to inspect the bot",

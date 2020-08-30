@@ -25,6 +25,7 @@ import (
 	"github.com/jonas747/yagpdb/discordlogger"
 	"github.com/jonas747/yagpdb/logs"
 	"github.com/jonas747/yagpdb/moderation"
+	"github.com/jonas747/yagpdb/nekoslife"
 	"github.com/jonas747/yagpdb/notifications"
 	"github.com/jonas747/yagpdb/premium"
 	"github.com/jonas747/yagpdb/premium/patreonpremiumsource"
@@ -89,6 +90,7 @@ func main() {
 	internalapi.RegisterPlugin()
 	prom.RegisterPlugin()
 	featureflags.RegisterPlugin()
+	nekoslife.RegisterPlugin()
 
 	run.Run()
 }
