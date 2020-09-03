@@ -5,6 +5,7 @@ import (
 	"github.com/jonas747/yagpdb/bot/eventsystem"
 	"github.com/jonas747/yagpdb/commands"
 	"github.com/jonas747/yagpdb/common"
+	"github.com/jonas747/yagpdb/stdcommands/actuallydefine"
 	"github.com/jonas747/yagpdb/stdcommands/advice"
 	"github.com/jonas747/yagpdb/stdcommands/allocstat"
 	"github.com/jonas747/yagpdb/stdcommands/banserver"
@@ -72,6 +73,7 @@ func (p *Plugin) AddCommands() {
 		invite.Command,
 
 		// Standard
+		actuallydefine.Command
 		define.Command,
 		weather.Command,
 		calc.Command,
