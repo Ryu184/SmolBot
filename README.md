@@ -7,6 +7,7 @@ For any information regarding the original bot refer to the original repo
 ## Changes
 ### Modified the name
 ### Removed Google analytics in the webui
+### Made the 8ball command local
 ### Added bindings to nekos.life API
 
 #### non-lewd
@@ -78,4 +79,3 @@ For any information regarding the original bot refer to the original repo
 		CatCommand,
 		WhyCommand,
 		FactCommand,
-- Made the 8ball command local
