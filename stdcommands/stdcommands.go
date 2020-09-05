@@ -73,7 +73,7 @@ func (p *Plugin) AddCommands() {
 		invite.Command,
 
 		// Standard
-		actuallydefine.Command
+		actuallydefine.Command,
 		define.Command,
 		weather.Command,
 		calc.Command,
