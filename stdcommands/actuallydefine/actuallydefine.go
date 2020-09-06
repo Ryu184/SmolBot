@@ -14,38 +14,47 @@ import (
 	"github.com/jonas747/yagpdb/common/config"
 )
 
-type SearchResult struct {
-	Type          string `json:"result_type"`
-	Tags          []string
-	Results       []Result `json:"definitions"`
-	Word          string `json:"word"`
-	Pronunciation string `json:"pronunciation"`
+type SearchResult []struct {
+	Meta struct {
+		ID        string   `json:"id"`
+		UUID      string   `json:"uuid"`
+		Sort      string   `json:"sort"`
+		Src       string   `json:"src"`
+		Section   string   `json:"section"`
+		Stems     []string `json:"stems"`
+		Offensive bool     `json:"offensive"`
+	} `json:"meta"`
+	Hwi struct {
+		Hw  string `json:"hw"`
+		Prs []struct {
+			Mw    string `json:"mw"`
+			Sound struct {
+				Audio string `json:"audio"`
+				Ref   string `json:"ref"`
+				Stat  string `json:"stat"`
+			} `json:"sound"`
+		} `json:"prs"`
+	} `json:"hwi"`
+	Fl  string `json:"fl"`
+	Def []struct {
+		Sseq [][][]interface{} `json:"sseq"`
+	} `json:"def"`
+	Uros []struct {
+		Ure string `json:"ure"`
+		Fl  string `json:"fl"`
+	} `json:"uros"`
+	Et       [][]string `json:"et"`
+	Shortdef []string   `json:"shortdef"`
 }
 
-type Result struct {
-	Type          string
-	Definition    string
-	Example       string
-}
-
-const API_URL = "https://owlbot.info/api/v4/dictionary/"
+const API_URL = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/"
 
 var (
-	confApiKey  = config.RegisterOption("yagpdb.owlbotapikey", "OwlBot API key", "")
+	confApiKey  = config.RegisterOption("yagpdb.MerriamWebster", "Merriam-Webster API key", "")
 )
 
 func Query(searchTerm string) (*SearchResult, error) {
-	req, err := http.NewRequest("GET", API_URL + url.QueryEscape(searchTerm), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Authorization", "Token " + confApiKey.GetString()) 
-	
-	client := &http.Client{Timeout: time.Second * 10}
-
-
-	resp, err := client.Do(req)
+	resp, err := http.Get(API_URL + url.QueryEscape(searchTerm) + "?key=" + confApiKey.GetString())
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +83,7 @@ var Command = &commands.YAGCommand{
 	CmdCategory:  commands.CategoryFun,
 	Name:         "Actually Define",
 	Aliases:      []string{"acdf"},
-	Description:  "Look up an owlbot definition",
+	Description:  "Look up an Merriam-Webster definition",
 	RequiredArgs: 1,
 	Arguments: []*dcmd.ArgDef{
 		{Name: "Topic", Type: dcmd.String},
@@ -86,25 +95,15 @@ var Command = &commands.YAGCommand{
 			return "Failed querying :(", err
 		}
 
-		if len(qResp.Results) < 1 {
-			return "No result :(", nil
+		qResp1 := *qResp
+		if len(qResp1) < 1 {
+			fmt.Println("No result :(", nil)
 		}
-		result := qResp.Results
-		word := qResp.Word
-		pronunciation := qResp.Pronunciation
 
-		cmdResp := fmt.Sprintf("**%s**[%s]:\n 1. %s: %s\n*%s*\n", word, pronunciation, result[0].Type, result[0].Definition, result[0].Example)
-
-		if len(qResp.Results) > 1 {
-			for i := 1 ; i < len(qResp.Results) ; i++{
-				cmdResp += fmt.Sprintf("%d. %s: %s\n%s\n", i+1, result[i].Type, result[i].Definition, result[i].Example)		
-			}
+		cmdResp := fmt.Sprintf("**%s**:\n", qResp1[0].Meta.ID)
+		for i := 0 ; i < len(qResp1) ; i++{
+			cmdResp += fmt.Sprintf("%d.[%s] %s: %s\n", i+1, qResp1[0].Hwi.Hw, qResp1[i].Fl, qResp1[i].Shortdef[0])
 		}
-		
-		cmdResp = strings.ReplaceAll(cmdResp, "<b>", "**")
-		cmdResp = strings.ReplaceAll(cmdResp, "</b>", "**")
-		cmdResp = strings.ReplaceAll(cmdResp, "<i>", "*")
-		cmdResp = strings.ReplaceAll(cmdResp, "</i>", "*")
 
 		return cmdResp, nil
 	},
